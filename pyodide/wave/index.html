@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <!-- <script src="https://cdn.jsdelivr.net/pyodide/v0.20.0/full/pyodide.js"></script> -->
+	  <script src="../dist/pyodide.js"></script>
+  </head>
+  <body>
+    <div></div>
+    <script type="text/javascript">
+      async function main(){
+        let pyodide = await loadPyodide();
+	await pyodide.loadPackage(['numpy', 'matplotlib']);
+        pyodide.runPython(`# taken from https://jakevdp.github.io/blog/2012/08/18/matplotlib-animation-tutorial/
+import numpy as np
+from numpy import linalg as la
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.animation as animation
+from matplotlib.backends.wasm_backend import FigureCanvasWasm
+def create_root_element(self):
+    from js import document
+    return document.querySelector('div')
+FigureCanvasWasm.create_root_element = create_root_element
+
+fig = plt.figure()
+ax = plt.axes(xlim=(0, 2), ylim=(-2, 2))
+line, = ax.plot([], [], lw=2)
+
+def init():
+    line.set_data([], [])
+    return line,
+
+def animate(i):
+    x = np.linspace(0, 2, 1000)
+    y = np.sin(2 * np.pi * (x - 0.01 * i))
+    line.set_data(x, y)
+    return line,
+
+anim = animation.FuncAnimation(fig, animate, init_func=init,
+                               frames=200, interval=20, blit=True)
+
+plt.show()`);
+      }
+      main();
+    </script>
+  </body>
+</html>
