@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>OpenGL Cube</title>
+    <script>
+      let tokenData={"tokenId": "0", "hash": "0x0000000000000000000000000000000000000000000000000000000000000000"}
+      // let tokenData={"tokenId": "0", "hash": "0x11ac128f8b54949c12d04102cfc01960fc496813cbc3495bf77aeed738579738"}
+      // let tokenData={"tokenId": "0", "hash": "0x722899b10c66da3b72fb60a8e71df442ee1c004547ba2227d76bed357469b4ea"}
+    </script>
+    <style>
+      html,body {
+        height: 100%;
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
+  </head>
+  <body style="margin:0px;width:100vw;">
+    <script>
+      var checkboxFunction;
+      var setRotationSpeed;
+      var statusElement = document.getElementById('status');
+      var progressElement = document.getElementById('progress');
+      var spinnerElement = document.getElementById('spinner');
+      
+      var resizeWindow;
+      var handleKey;
+      
+      var setAngleX;
+      var setAngleY;
+      var setAngleZ;
+      
+      var defaultCanvas0 = document.createElement('canvas');
+      defaultCanvas0.setAttribute('id', 'defaultCanvas0');
+      document.body.appendChild(defaultCanvas0);
+      
+      var Module = {
+        onRuntimeInitialized: function() {
+                      resizeWindow = Module.cwrap('resizeWindow',null,['number','number']);
+                      handleKey = Module.cwrap('handleKey', null, ['string']);
+        },
+        preRun: [function() {ENV.TOKEN_HASH = tokenData['hash']}, function() {ENV.WIDTH = window.innerWidth.toString()}, function() {ENV.HEIGHT = window.innerHeight.toString()}],
+        postRun: [],
+        print: (function() {})(),
+        printErr: function(text) {
+          if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+          console.error(text);
+        },
+        canvas: (function() {
+          var canvas = document.getElementById('defaultCanvas0');
+          canvas.addEventListener("webglcontextlost", function(e) { alert('WebGL context lost. You will need to reload the page.'); e.preventDefault(); }, false);
+                      window.addEventListener("resize", function (e) {
+                              canvas.height = window.innerHeight;
+                              canvas.style.height = window.innerHeight;
+                              canvas.width = document.body.clientWidth;
+                              resizeWindow(canvas.width, canvas.height);
+                      });
+      
+                      window.addEventListener("keydown", function (e) {
+                              if (e.code === "F5" || e.code === "F11" || e.code === "F12" || e.code === "KeyR" || (e.ctrlKey && e.code === "KeyI")) {
+                                      e.preventDefault = function() {};
+                              } else if (e.ctrlKey && e.code === "KeyS") {
+                                      var canvasSaved = document.querySelector("canvas");
+                                      var canvasURL = canvasSaved.toDataURL("image/png");
+                                      var createElem = document.createElement("a");
+                                      createElem.href = canvasURL;
+                                      createElem.download = "image.png";
+                                      createElem.click();
+                                      createElem.remove();
+                              }
+                              e.isTrusted && handleKey(e.key);
+                              // e.preventDefault();
+                      }, {capture: true});
+      
+          return canvas;
+        })(),
+        setStatus: function(text) {},
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {
+          this.totalDependencies = Math.max(this.totalDependencies, left);
+          Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : 'All downloads complete.');
+        }
+      };
+      window.onerror = function() {};
+    </script>
+    {{{ SCRIPT }}}
+  </body>
+</html>
