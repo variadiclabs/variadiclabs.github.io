@@ -1,140 +1,78 @@
-<!doctype html>
-<html lang="en-us">
+<html>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <title>OpenGL Cube</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script>
-      let tokenData={"tokenId": "0", "hash": "0x0000000000000000000000000000000000000000000000000000000000000000"}
-      // let tokenData={"tokenId": "0", "hash": "0x11ac128f8b54949c12d04102cfc01960fc496813cbc3495bf77aeed738579738"}
+      // let tokenData={"tokenId": "0", "hash": "0x0000000000000000000000000000000000000000000000000000000000000000"}
+      let tokenData={"tokenId": "0", "hash": "0x11ac128f8b54949c12d04102cfc01960fc496813cbc3495bf77aeed738579738"}
       // let tokenData={"tokenId": "0", "hash": "0x722899b10c66da3b72fb60a8e71df442ee1c004547ba2227d76bed357469b4ea"}
     </script>
     <style>
-      html,body {
+      html {
         height: 100%;
+      }
+      body {
+        min-height: 100%;
         margin: 0;
-        overflow: hidden;
+        padding: 0;
       }
-      .emscripten { padding-right: 0; margin-left: auto; margin-right: auto; }
-      textarea.emscripten { font-family: monospace; width: 80%; }
-      div.emscripten { }
-      div.emscripten_border { max-height: 100%; max-width: 100%; }
-      /* the canvas *must not* have any border or padding, or mouse coords will be wrong */
-      canvas.emscripten { border: 0px none; background-color: black; }
-
-      .spinner {
-        height: 0px;
-        width: 0px;
-        margin: 0px auto;
-        -webkit-animation: rotation .8s linear infinite;
-        -moz-animation: rotation .8s linear infinite;
-        -o-animation: rotation .8s linear infinite;
-        animation: rotation 0.8s linear infinite;
-        border-left: 0px solid rgb(0,150,240);
-        border-right: 0px solid rgb(0,150,240);
-        border-bottom: 0px solid rgb(0,150,240);
-        border-top: 0px solid rgb(100,0,200);
-        border-radius: 100%;
-        background-color: black;
-        /*background-color: rgb(200,100,250);*/
+      canvas {
+        padding: 0;
+        margin: auto;
+        display: block;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
       }
-      @-webkit-keyframes rotation {
-        from {-webkit-transform: rotate(0deg);}
-        to {-webkit-transform: rotate(360deg);}
-      }
-      @-moz-keyframes rotation {
-        from {-moz-transform: rotate(0deg);}
-        to {-moz-transform: rotate(360deg);}
-      }
-      @-o-keyframes rotation {
-        from {-o-transform: rotate(0deg);}
-        to {-o-transform: rotate(360deg);}
-      }
-      @keyframes rotation {
-        from {transform: rotate(0deg);}
-        to {transform: rotate(360deg);}
-      }
-
-			.slider {
-				-webkit-appearance: none;
-				appearance: none;
-				background: #999999/* Grey background */
-			}
     </style>
   </head>
-  <body style="margin:0px;width:100vw;">
-		<!-- <div style="display:table;">
-			<div style="display:table-row;">
-				<div style="display:table-cell;">
-					<p style="background-color:#000000;color:white;">rotation around the x axis.</p>
-				</div>
-				<div style="display:table-cell;" class="slidecontainer">
-					<input type="range" min="0" max="360" value="45" class="slider" id="mySliderX">
-				</div>
-				<div style="display:table-cell;">
-					<p id="slider_value_x" style="background-color:#000000;color:white;"></p>
-				</div>
-			</div>
-			<div style="display:table-row;">
-				<div style="display:table-cell;">
-					<p style="background-color:#000000;color:white;">rotation around the y axis.</p>
-				</div>
-				<div style="display:table-cell;" class="slidecontainer">
-					<input type="range" min="0" max="360" value="45" class="slider" id="mySliderY">
-				</div>
-				<div style="display:table-cell;">
-					<p id="slider_value_y" style="background-color:#000000;color:white;"></p>
-				</div>
-			</div>
-			<div style="display:table-row;">
-				<div style="display:table-cell;">
-					<p style="background-color:#000000;color:white;">rotation around the z axis.</p>
-				</div>
-				<div style="display:table-cell;" class="slidecontainer">
-					<input type="range" min="0" max="360" value="45" class="slider" id="mySliderZ">
-				</div>
-				<div style="display:table-cell;">
-					<p id="slider_value_z" style="background-color:#000000;color:white;"></p>
-				</div>
-			</div>
-		</div> -->
-		<!-- <div style="display:table;">
-			<div style="display:table-row;">
-				<div style="display:table-cell;">
-					<p style="background-color:#000000;color:white;">automatic rotation: <input type="checkbox" id="myCheck" onclick="checkboxFunction()" checked></p>
-				</div>
-				<div style="display:table-cell;">
-				</div>
-			</div>
-		</div> -->
-		<!-- <div style="display:table;">
-			<div style="display:table-row;">
-				<div style="display:table-cell;">
-					<p style="background-color:#000000;color:white;">automatic rotation speed</p>
-				</div>
-				<div style="display:table-cell;" class="slidecontainer">
-					<input type="range" min="0.5" max="5.0" value="1.0" class="slider" id="cubeSpeedSlider">
-				</div>
-				<div style="display:table-cell;">
-					<p id="cubeSpeedVal" style="background-color:#000000;color:white;"></p>
-				</div>
-			</div>
-		</div> -->
-    <!-- <hr/> -->
-    <!-- <figure style="overflow:visible;" id="spinner"><div class="spinner"></div><center style="margin-top:0.5em"><strong>emscripten</strong></center></figure>
-    <div class="emscripten" id="status">Downloading...</div>
-    <div class="emscripten">
-      <progress value="0" max="100" id="progress" hidden=1></progress>  
-    </div> -->
-    <div class="emscripten_border">
-      <canvas class="emscripten" id="canvas" oncontextmenu="event.preventDefault()" tabindex=-1></canvas>
-    </div>
-    <!-- <hr/> -->
-    
-    <!-- <hr/>
-    <textarea style="background-color:#000000;color:white;" class="emscripten" id="output" rows="8"></textarea>
-    <hr> -->
-    <script type='text/javascript' src='glcube_shell.js'>
+  <body>
+    <script>
+      var resizeWindow;
+      var handleKey;
+      var defaultCanvas0 = document.createElement('canvas');
+      defaultCanvas0.setAttribute('id', 'canvas');
+      document.body.appendChild(defaultCanvas0);
+
+      var Module = {
+        arguments: [tokenData['tokenId'], tokenData['hash'], window.innerWidth.toString(), window.innerHeight.toString()],
+        onRuntimeInitialized: function() {
+          resizeWindow = Module.cwrap('resizeWindow', null, ['number','number']);
+          handleKey = Module.cwrap('handleKey', null, ['string']);
+        },
+        locateFile: function(path, prefix) { return "https://glcube.skalosia.com/project/0.wasm"; },
+        preRun: [],
+        postRun: [],
+        print: (function() {})(),
+        printErr: function(text) {
+          if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+          console.error(text);
+        },
+        canvas: (function() {
+          var defaultCanvas = document.querySelector('canvas');
+          window.addEventListener("resize", function (e) {
+            defaultCanvas.height = window.innerHeight;
+            defaultCanvas.style.height = window.innerHeight;
+            defaultCanvas.width = document.body.clientWidth;
+            resizeWindow(defaultCanvas.width, defaultCanvas.height);
+          });
+
+          window.addEventListener("keydown", function (e) {
+            if (e.code === "F5" || e.code === "F11" || e.code === "F12" || e.code === "KeyR" || (e.ctrlKey && e.code === "KeyI")) {
+              e.preventDefault = function() {};
+            }
+            e.isTrusted && handleKey(e.key);
+          }, {capture: true});
+
+          return defaultCanvas;
+        })(),
+        setStatus: function(text) {},
+        totalDependencies: 0,
+        monitorRunDependencies: function(left) {}
+      };
+      window.onerror = function() {};
+
     </script>
     {{{ SCRIPT }}}
   </body>

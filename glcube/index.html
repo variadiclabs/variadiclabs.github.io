@@ -1,16 +1,10 @@
-<!doctypehtml>
-<html lang=en-us>
+<html>
    <head>
-      <meta charset=utf-8>
-      <meta content="text/html; charset=utf-8"http-equiv=Content-Type>
-      <title>OpenGL Cube</title>
-      <script>let tokenData={tokenId:"0",hash:"0x0000000000000000000000000000000000000000000000000000000000000000"}</script>
-      <style>body,html{height:100%;margin:0;overflow:hidden}.emscripten{padding-right:0;margin-left:auto;margin-right:auto}textarea.emscripten{font-family:monospace;width:80%}div.emscripten_border{max-height:100%;max-width:100%}canvas.emscripten{border:0 none}.spinner{height:0;width:0;margin:0 auto;-webkit-animation:rotation .8s linear infinite;-moz-animation:rotation .8s linear infinite;-o-animation:rotation .8s linear infinite;animation:rotation .8s linear infinite;border-left:0 solid #0096f0;border-right:0px solid #0096f0;border-bottom:0 solid #0096f0;border-top:0 solid #6400c8;border-radius:100%;background-color:#000}@-webkit-keyframes rotation{from{-webkit-transform:rotate(0)}to{-webkit-transform:rotate(360deg)}}@-moz-keyframes rotation{from{-moz-transform:rotate(0)}to{-moz-transform:rotate(360deg)}}@-o-keyframes rotation{from{-o-transform:rotate(0)}to{-o-transform:rotate(360deg)}}@keyframes rotation{from{transform:rotate(0)}to{transform:rotate(360deg)}}.slider{-webkit-appearance:none;appearance:none;background:#999}</style>
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+      <script>let tokenData={tokenId:"0",hash:"0x11ac128f8b54949c12d04102cfc01960fc496813cbc3495bf77aeed738579738"}</script>
+      <style>html{height:100%}body{min-height:100%;margin:0;padding:0}canvas{padding:0;margin:auto;display:block;position:absolute;top:0;bottom:0;left:0;right:0}</style>
    </head>
-   <body style=margin:0;width:100vw>
-      <div class=emscripten_border>
-         <canvas class=emscripten id=canvas oncontextmenu=event.preventDefault() tabindex=-1></canvas>
-      </div>
-      <script type="text/javascript" src=glcube_combined.js async></script>
+   <body>
+      <script>var checkboxFunction,setRotationSpeed,resizeWindow,handleKey,setAngleX,setAngleY,setAngleZ,statusElement=document.getElementById("status"),progressElement=document.getElementById("progress"),spinnerElement=document.getElementById("spinner"),defaultCanvas0=document.createElement("canvas");defaultCanvas0.setAttribute("id","canvas"),document.body.appendChild(defaultCanvas0);var Module={arguments:[tokenData.tokenId,tokenData.hash,window.innerWidth.toString(),window.innerHeight.toString()],onRuntimeInitialized:function(){resizeWindow=Module.cwrap("resizeWindow",null,["number","number"]),handleKey=Module.cwrap("handleKey",null,["string"])},preRun:[],postRun:[],print:void 0,printErr:function(e){arguments.length>1&&(e=Array.prototype.slice.call(arguments).join(" ")),console.error(e)},canvas:function(){var e=document.querySelector("canvas");return window.addEventListener("resize",(function(n){e.height=window.innerHeight,e.style.height=window.innerHeight,e.width=document.body.clientWidth,resizeWindow(e.width,e.height)})),window.addEventListener("keydown",(function(e){("F5"===e.code||"F11"===e.code||"F12"===e.code||"KeyR"===e.code||e.ctrlKey&&"KeyI"===e.code)&&(e.preventDefault=function(){}),e.isTrusted&&handleKey(e.key)}),{capture:!0}),e}(),setStatus:function(e){},totalDependencies:0,monitorRunDependencies:function(e){}};window.onerror=function(){}</script><script async src=glcube.js></script>
    </body>
 </html>

@@ -35,32 +35,11 @@ static float currentAngleZ=45.0;
 static float autodelay=1.0;
 
 extern "C" {
-  void setAngleX(const double ucx) {
-    reqAngleX = ucx;
-  }
-  void setAngleY(const double ucy) {
-    reqAngleY = ucy;
-  }
-  void setAngleZ(const double ucz) {
-    reqAngleZ = ucz;
-  }
-
-  void setRotationSpeed(const float delay) {
-    autodelay = delay;
-  }
-
-  void checkbox() {
-    autoRotate = !autoRotate;
-  }
-
   void resizeWindow(int width, int height) {
     glViewport(0, 0, width, height);
   }
 
   void handleKey(const char* keyStr) {
-    if (strcmp(keyStr, "Escape") == 0) {
-      SDL_Quit( );
-    }
     if (strcmp(keyStr, " ") == 0) {
       autoRotate = !autoRotate;
     }
@@ -319,22 +298,19 @@ static void setup_sdl_window(int width,int height) {
   */
 }
  
-int main() {
-  int width;
-  int height;
+int main(int argc, const char *argv[]) {
+  // tokenId hash width height
+  assert(argc == 5);
+  std::string tokenId = argv[1];
+  std::string tokenHash = argv[2];
+  int width = atoi(argv[3]);
+  int height = atoi(argv[4]);
 
-  width = atoi(std::getenv("WIDTH"));
-  height = atoi(std::getenv("HEIGHT"));
-  char* charHash = std::getenv("TOKEN_HASH");
-
-  std::string tokenHash = charHash;
-
-  EM_ASM_({
-    console.log('[Demo passing string as a pointer] Passed hash ' + Module.UTF8ToString($0) + ' from external');
-  }, tokenHash.c_str());
+  // EM_ASM_({
+  //   console.log('[Demo passing string as a pointer] Passed hash ' + Module.UTF8ToString($0) + ' from external');
+  // }, tokenHash.c_str());
   printf("Passed hash %s from external\n", tokenHash.c_str());
   
-
   // super simple example of generating a numeric seed for srand from a token hash
   int i;
   int num = 0;
@@ -349,9 +325,9 @@ int main() {
   srand(num);
 
   // printf("Some random outputs from this seed: %d %d %d\n", rand(), rand(), rand());
-  EM_ASM_({
-    console.log('Some random outputs from this seed: ' + $0 + ' ' + $1 + ' ' + $2);
-  }, rand(), rand(), rand());
+  // EM_ASM_({
+  //   console.log('Some random outputs from this seed: ' + $0 + ' ' + $1 + ' ' + $2);
+  // }, rand(), rand(), rand());
 
   setup_sdl_window(width,height);
   setup_opengl(width,height);
